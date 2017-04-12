@@ -57,6 +57,7 @@ class Calculater
   private :addCache
 
   def calculate(n)
+      puts n
       case n 
       when 0 then
         return 1
@@ -92,11 +93,11 @@ def main(argv)
   begin 
     #パラメータがない場合は標準エラー出力にエラーメッセージを出力する
     if  argv[0] == nil || argv[1] == nil then
-      raise 
+      raise "parameter error."
     end
   calculater = Calculater.new(argv[0])
   puts calculater.calculate(argv[1].to_i)
   rescue => e
-    puts "you must set param. arg1: seed, arg2: n"
+    puts e
   end
 end
