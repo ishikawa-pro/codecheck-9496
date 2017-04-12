@@ -39,6 +39,23 @@ class Calculater
   end
   private :askServer
 
+  def addCache(n)
+    #APIを叩いてresultへ格納
+    result = askServer(n)
+ 
+    if @cache.has_key?(@seed) == false then
+      @cache[result["seed"]] = Hashnew
+    end
+    @cache[result["seed"]][result["n"]] = result["result"]
+
+    #cacheへ追加してcache.jsonに保存
+    File.open("./cache.json", 'w') do |file|
+      JSON.dump(@cache, file)
+    end
+    return result["result"].to_i
+  end
+  private :addCache
+
   def calculate(n)
       case n 
       when 0 then
@@ -51,17 +68,14 @@ class Calculater
           return sum
         else
           #キャッシュにない場合はAPIを叩く
-          if @cache[@seed][n.to_s] != nil then
-            return @cache[@seed][n.to_s]
-          else
-            #APIを叩いてresultへ格納
-            result = askServer(n)
-            #cacheへ追加してcache.jsonに保存
-            @cache[result["seed"]][result["n"]] = result["result"]
-            File.open("./cache.json", 'w') do |file|
-              JSON.dump(@cache, file)
+          if @cache.has_key?(@seed) == true then
+            if @cache[@seed].has_key?(n.to_s) == true then
+              return @cache[@seed][n.to_s]
+            else
+              return addCache(n)
             end
-            return result["result"]
+          else
+            return addCache(n)
           end
         end
       end
