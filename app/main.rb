@@ -83,6 +83,12 @@ class Calculater
   public :calculate
 end
 def main(argv)
+  if File.exist?("./cache.json") == false then
+    File.open("cache.json", "w") do |file|
+      JSON.dump({}, file)
+    end
+  end
+
   begin 
     #パラメータがない場合は標準エラー出力にエラーメッセージを出力する
     if  argv[0] == nil || argv[1] == nil then
