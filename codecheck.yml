@@ -1,0 +1,5 @@
+build:
+- bundle install
+env:
+  APP_COMMAND: ruby index.rb
+test: mocha
