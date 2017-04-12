@@ -42,23 +42,18 @@ class Calculater
   def calculate(n)
       case n 
       when 0 then
-        puts "0:#{n}"
         return 1
       when 2 then
-        puts "1:#{n}"
         return 2
       else
         if n % 2 == 0 then
-          puts "2:#{n}"
           sum = calculate(n - 1) + calculate(n - 2) + calculate(n - 3) + calculate(n - 4)
           return sum
         else
           #キャッシュにない場合はAPIを叩く
           if @cache[@seed][n.to_s] != nil then
-          puts "3:#{n}"
             return @cache[@seed][n.to_s]
           else
-          puts "4:#{n}"
             #APIを叩いてresultへ格納
             result = askServer(n)
             #cacheへ追加してcache.jsonに保存
