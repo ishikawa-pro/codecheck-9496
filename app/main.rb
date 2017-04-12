@@ -44,7 +44,7 @@ class Calculater
     result = askServer(n)
  
     if @cache.has_key?(@seed) == false then
-      @cache[result["seed"]] = Hashnew
+      @cache[result["seed"]] = Hash.new
     end
     @cache[result["seed"]][result["n"]] = result["result"]
 
