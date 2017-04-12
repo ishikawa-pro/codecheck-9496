@@ -57,7 +57,7 @@ class Calculater
   private :addCache
 
   def calculate(n)
-      puts n
+      #puts n
       case n 
       when 0 then
         return 1
