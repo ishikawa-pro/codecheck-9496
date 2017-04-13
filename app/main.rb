@@ -6,6 +6,7 @@ class Calculater
     attr_accessor :n, :cache
 
   def initialize(seed)
+#    @apiCount = 0
     @seed = seed
     #json形式で保存したcacheをロードしてHashへ格納
     File.open("./cache.json") do |file|
@@ -34,6 +35,8 @@ class Calculater
     response = Net::HTTP.start(uri.host, uri.port) do |http|
         http.request(request)
     end
+#    @apiCount += 1
+#    puts "#{@apiCount}: #{n}"
     #結果をjsonにパースして格納
     return JSON.parse(response.body)
   end
@@ -47,6 +50,7 @@ class Calculater
       @cache[result["seed"]] = Hash.new
     end
     @cache[result["seed"]][result["n"]] = result["result"]
+#    p @cache[result["seed"]]
 
     #cacheへ追加してcache.jsonに保存
     File.open("./cache.json", 'w') do |file|
@@ -70,8 +74,9 @@ class Calculater
         else
           #キャッシュにない場合はAPIを叩く
           if @cache.has_key?(@seed) == true then
-            if @cache[@seed].has_key?(n.to_s) == true then
-              return @cache[@seed][n.to_s]
+#            puts "already have Registration seed"
+            if @cache[@seed].has_key?(n) == true then
+              return @cache[@seed][n]
             else
               return addCache(n)
             end
@@ -83,6 +88,7 @@ class Calculater
   end
   public :calculate
 end
+
 #def main(argv)
   argv = ARGV
   if File.exist?("./cache.json") == false then
@@ -94,12 +100,13 @@ end
   begin 
     #パラメータがない場合は標準エラー出力にエラーメッセージを出力する
     if  argv[0] == nil || argv[1] == nil then
-      raise 
+      raise "codecheck CLI should fail with status code 1" 
     end
   calculater = Calculater.new(argv[0])
   puts calculater.calculate(argv[1].to_i)
-  rescue 
-    puts "codecheck CLI should fail with status code 1"
+
+  rescue => e
+    puts e
 #    return 1
   end
 #end
