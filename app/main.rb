@@ -1,6 +1,8 @@
 require 'net/http'
 require 'json'
 
+class MyError < StandardError; end
+
 class Calculater
     attr_reader :seed
     attr_accessor :n, :cache
@@ -93,13 +95,11 @@ def main(argv)
   begin 
     #パラメータがない場合は標準エラー出力にエラーメッセージを出力する
     if  argv[0] == nil || argv[1] == nil then
-      #raise "parameter error."
-      puts "error."
-      return 
+      raise MyError
     end
   calculater = Calculater.new(argv[0])
   puts calculater.calculate(argv[1].to_i)
-  rescue => e
-    puts e
+  rescue 
+    puts "error."
   end
 end
