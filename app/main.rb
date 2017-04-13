@@ -92,7 +92,6 @@ class Calculater
   public :calculate
 end
 
-#テストの際にindex.rbを使わずに、直接main.rbを実行するようになったのでmain関数を廃止
 def main(argv)
 
   #キャッシュ用ファイルのcache.jsonが無い場合は作成
@@ -114,7 +113,7 @@ def main(argv)
   #エラー処理
   rescue => e
     STDERR.puts e.to_s
-    return 1
+    exit
   end
   return 0
 end
