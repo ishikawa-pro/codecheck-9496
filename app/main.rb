@@ -93,7 +93,8 @@ def main(argv)
   begin 
     #パラメータがない場合は標準エラー出力にエラーメッセージを出力する
     if  argv[0] == nil || argv[1] == nil then
-      raise "parameter error."
+      #raise "parameter error."
+      puts "error."
     end
   calculater = Calculater.new(argv[0])
   puts calculater.calculate(argv[1].to_i)
