@@ -103,7 +103,7 @@ end
     end
   end
 
-#  begin 
+  begin 
     #パラメータがない場合は標準エラー出力にエラーメッセージを出力する
     if  argv[0] == nil || argv[1] == nil then
       raise "codecheck CLI should fail with status code 1" 
@@ -113,8 +113,8 @@ end
   puts calculater.calculate(argv[1].to_i)
 
   #エラー処理
-#  rescue => e
-#    puts 1 
+  rescue => e
+    p e.to_s
     
-#  end
+  end
 #end
