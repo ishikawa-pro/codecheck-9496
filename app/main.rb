@@ -95,6 +95,7 @@ def main(argv)
     if  argv[0] == nil || argv[1] == nil then
       #raise "parameter error."
       puts "error."
+      return 
     end
   calculater = Calculater.new(argv[0])
   puts calculater.calculate(argv[1].to_i)
