@@ -108,13 +108,12 @@ end
     if  argv[0] == nil || argv[1] == nil then
       raise "codecheck CLI should fail with status code 1" 
     end
-    
   
   calculater = Calculater.new(argv[0])
   puts calculater.calculate(argv[1].to_i)
 
   #エラー処理
   rescue => e
-    puts e.to_s
+    puts ""
   end
 #end
