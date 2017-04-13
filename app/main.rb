@@ -115,6 +115,6 @@ end
 
   #エラー処理
   rescue => e
-    puts e
+    puts e.to_s
   end
 #end
