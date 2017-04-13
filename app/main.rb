@@ -83,7 +83,8 @@ class Calculater
   end
   public :calculate
 end
-def main(argv)
+#def main(argv)
+  argv = ARGV
   if File.exist?("./cache.json") == false then
     File.open("cache.json", "w") do |file|
       JSON.dump({}, file)
@@ -99,6 +100,6 @@ def main(argv)
   puts calculater.calculate(argv[1].to_i)
   rescue 
     puts "codecheck CLI should fail with status code 1"
-    return 1
+#    return 1
   end
-end
+#end
