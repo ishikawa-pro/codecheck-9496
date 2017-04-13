@@ -114,6 +114,7 @@ end
 
   #エラー処理
   rescue => e
-    puts ""
+    puts 1 
+    
   end
 #end
