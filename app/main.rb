@@ -113,7 +113,7 @@ def main(argv)
   #エラー処理
   rescue => e
     STDERR.puts e.to_s
-    exit
+    exit(false)
   end
   return 0
 end
