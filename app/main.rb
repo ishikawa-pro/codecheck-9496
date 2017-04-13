@@ -113,9 +113,10 @@ def main(argv)
   #エラー処理
   rescue => e
     puts e.to_s
+    #最初のテストケースが終了ステータスで判定するため、
+    #終了ステータスが1を返すためのコード
     exit(false)
   end
-  return 0
 end
 main(ARGV)
 
