@@ -6,7 +6,6 @@ class Calculater
     attr_accessor :n, :cache
 
   def initialize(seed)
-#    @apiCount = 0
     @seed = seed
     #json形式で保存したcacheをロードしてHashへ格納
     File.open("./cache.json") do |file|
@@ -35,8 +34,6 @@ class Calculater
     response = Net::HTTP.start(uri.host, uri.port) do |http|
         http.request(request)
     end
-#    @apiCount += 1
-#    puts "#{@apiCount}: #{n}"
     #結果をjsonにパースして格納
     return JSON.parse(response.body)
   end
@@ -46,11 +43,13 @@ class Calculater
     #APIを叩いてresultへ格納
     result = askServer(n)
  
+    #cache.jsonにseedがあるか
     if @cache.has_key?(@seed) == false then
+      #新しいseedをキーとしたハッシュを作成
       @cache[result["seed"]] = Hash.new
     end
+    #nの結果を格納
     @cache[result["seed"]][result["n"]] = result["result"]
-#    p @cache[result["seed"]]
 
     #cacheへ追加してcache.jsonに保存
     File.open("./cache.json", 'w') do |file|
@@ -61,7 +60,7 @@ class Calculater
   private :addCache
 
   def calculate(n)
-      #puts n
+      #引数に応じて処理を分岐
       case n 
       when 0 then
         return 1
@@ -69,18 +68,22 @@ class Calculater
         return 2
       else
         if n % 2 == 0 then
+          #再帰呼び出し
           sum = calculate(n - 1) + calculate(n - 2) + calculate(n - 3) + calculate(n - 4)
           return sum
         else
           #キャッシュにない場合はAPIを叩く
+          #seedはあるか？
           if @cache.has_key?(@seed) == true then
-#            puts "already have Registration seed"
+            #nのキャッシュがあるか?              
             if @cache[@seed].has_key?(n) == true then
               return @cache[@seed][n]
             else
+              #APIを叩く
               return addCache(n)
             end
           else
+            #APIを叩く
             return addCache(n)
           end
         end
@@ -89,8 +92,11 @@ class Calculater
   public :calculate
 end
 
+#テストの際にindex.rbを使わずに、直接main.rbを実行するようになったのでmain関数を廃止
 #def main(argv)
   argv = ARGV
+
+  #キャッシュ用ファイルのcache.jsonが無い場合は作成
   if File.exist?("./cache.json") == false then
     File.open("cache.json", "w") do |file|
       JSON.dump({}, file)
@@ -102,11 +108,13 @@ end
     if  argv[0] == nil || argv[1] == nil then
       raise "codecheck CLI should fail with status code 1" 
     end
+    
+  
   calculater = Calculater.new(argv[0])
   puts calculater.calculate(argv[1].to_i)
 
+  #エラー処理
   rescue => e
     puts e
-#    return 1
   end
 #end
