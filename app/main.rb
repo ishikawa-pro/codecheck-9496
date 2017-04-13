@@ -104,7 +104,7 @@ def main(argv)
   begin 
     #パラメータがない場合は標準エラー出力にエラーメッセージを出力する
     if  argv[0] == nil || argv[1] == nil then
-      raise "codecheck CLI should fail with status code 1" 
+      raise "error." 
     end
   
   calculater = Calculater.new(argv[0])
@@ -112,7 +112,7 @@ def main(argv)
 
   #エラー処理
   rescue => e
-    STDERR.puts e.to_s
+    puts e.to_s
     exit(false)
   end
   return 0
