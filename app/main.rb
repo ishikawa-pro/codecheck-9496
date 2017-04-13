@@ -114,7 +114,7 @@ end
 
   #エラー処理
   rescue => e
-    puts e.to_s
+    STDERR.puts e.to_s
     
   end
 #end
