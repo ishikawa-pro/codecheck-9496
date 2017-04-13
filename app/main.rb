@@ -114,7 +114,7 @@ end
 
   #エラー処理
   rescue => e
-    p e.to_s
+    puts e.to_s
     
   end
 #end
