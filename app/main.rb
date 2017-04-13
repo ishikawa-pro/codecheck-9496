@@ -93,8 +93,7 @@ class Calculater
 end
 
 #テストの際にindex.rbを使わずに、直接main.rbを実行するようになったのでmain関数を廃止
-#def main(argv)
-  argv = ARGV
+def main(argv)
 
   #キャッシュ用ファイルのcache.jsonが無い場合は作成
   if File.exist?("./cache.json") == false then
@@ -115,6 +114,9 @@ end
   #エラー処理
   rescue => e
     STDERR.puts e.to_s
-    
+    return 1
   end
-#end
+  return 0
+end
+main(ARGV)
+
