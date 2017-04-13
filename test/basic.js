@@ -10,7 +10,7 @@ describe("Recursive API function", () => {
   it("should throw an error and return an error message string when args are missing", () => {
     return app.codecheck().then( result => {
       let actualResult = result.stdout.join("");
-      expect(result.code).to.equal(0, "codecheck CLI should fail with status code 1");
+      expect(result.code).to.equal(1, "codecheck CLI should fail with status code 1");
       expect(actualResult).to.be.ok;
       expect(actualResult).to.be.a('string');
     });
